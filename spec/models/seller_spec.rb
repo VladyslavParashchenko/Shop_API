@@ -19,7 +19,7 @@ require "rails_helper"
 
 RSpec.describe Seller, type: :model do
   describe "validations" do
-    let(:seller) { FactoryBot::build(:seller) }
+    let(:seller) { FactoryBot.build(:seller) }
     describe "age validation" do
       context "with ok user" do
         it "is valid" do
