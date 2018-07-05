@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: seller_profiles
@@ -9,7 +11,7 @@
 #  user_id     :integer
 #
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe SellerProfile, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
