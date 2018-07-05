@@ -18,5 +18,21 @@
 require "rails_helper"
 
 RSpec.describe Seller, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "validations" do
+    let(:seller) { FactoryBot::build(:seller) }
+    describe "age validation" do
+      context "with ok user" do
+        it "is valid" do
+          expect(seller.errors[:birthday].empty?).to be_truthy
+        end
+      end
+      context "with invalid birthday" do
+        let(:seller) { build(:seller, birthday: 12.years.ago) }
+        it "is invalid" do
+          seller.valid?
+          expect(seller.errors[:birthday].empty?).to be_falsey
+        end
+      end
+    end
+  end
 end

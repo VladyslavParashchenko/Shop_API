@@ -20,4 +20,10 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   validates :phone, presence: true
   validates :birthday, presence: true
+  validate :validate_age
+  def validate_age
+    if birthday.present? && birthday > 18.years.ago
+      errors.add :birthday, "age must be greater than 18"
+    end
+  end
 end
