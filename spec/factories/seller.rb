@@ -7,5 +7,8 @@ FactoryBot.define do
     email { Faker::Internet.email }
     phone { Faker::PhoneNumber.cell_phone }
     birthday { Faker::Date.between(50.years.ago, 20.years.ago) }
+    after(:create) do |seller|
+      create(:seller_profile, seller: seller)
+    end
   end
 end

@@ -15,15 +15,7 @@
 #  type       :string
 #
 
-class User < ApplicationRecord
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :phone, presence: true
-  validates :birthday, presence: true
-  validate :validate_age
-  def validate_age
-    if birthday.present? && birthday > 18.years.ago
-      errors.add :birthday, "age must be greater than 18"
-    end
-  end
+class Seller < User
+  has_many :products
+  has_one :seller_profile
 end
