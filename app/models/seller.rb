@@ -12,6 +12,7 @@
 #  updated_at          :datetime         not null
 #  seller_profile_id   :integer
 #  customer_profile_id :integer
+#  type                :string
 #
 
 class Seller < User

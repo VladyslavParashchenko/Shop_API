@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_04_120334) do
+ActiveRecord::Schema.define(version: 2018_07_05_092728) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 2018_07_04_120334) do
     t.datetime "updated_at", null: false
     t.integer "seller_profile_id"
     t.integer "customer_profile_id"
+    t.string "type"
     t.index ["customer_profile_id"], name: "index_users_on_customer_profile_id"
     t.index ["seller_profile_id"], name: "index_users_on_seller_profile_id"
   end
