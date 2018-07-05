@@ -6,8 +6,9 @@
 #  card_number :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  user_id     :integer
 #
 
 class SellerProfile < ApplicationRecord
-  has_one :seller
+  belongs_to :seller
 end
