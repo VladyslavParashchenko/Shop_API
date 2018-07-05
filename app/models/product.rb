@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: products
@@ -16,8 +15,10 @@
 #  customer_id :string
 #
 
-require "rails_helper"
-
-RSpec.describe Product, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+class Product < ApplicationRecord
+  validates :price, numericality: {greater_than: 0}
+  validates :name, presence: true
+  enum status: { for_sale: 0, sales: 1 }
+  belongs_to :seller
+  belongs_to :category
 end
