@@ -1,17 +1,11 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :seller, class: Seller do
-    first_name { Faker::Name.first_name }
-    last_name { Faker::Name.last_name }
-    email { Faker::Internet.email }
-    phone { Faker::PhoneNumber.cell_phone }
-    password "12345678"
-    password_confirmation "12345678"
-    confirmed_at { Time.now }
-    birthday { Faker::Date.between(50.years.ago, 20.years.ago) }
-    after(:create) do |seller|
-      create(:seller_profile, seller: seller)
+  factory :seller, class: Seller, parent: :user do
+    trait :with_profile do
+      after(:create) do |seller|
+        create(:seller_profile, seller: seller)
+      end
     end
   end
 end

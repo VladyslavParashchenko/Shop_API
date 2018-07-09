@@ -2,6 +2,10 @@
 
 Rails.application.routes.draw do
 
+  resources :product
+  get "category/index"
+  get "profile_controller/create"
+  get "profile_controller/update"
   mount_devise_token_auth_for "User", at: "auth", skip: [:registrations]
   mount_devise_token_auth_for "Seller", at: "auth_seller", skip: [:confirmations, :passwords, :sessions, :unlocks]
   mount_devise_token_auth_for "Customer", at: "auth_customer", skip: [:confirmations, :passwords, :sessions, :unlocks]

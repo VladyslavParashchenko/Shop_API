@@ -8,7 +8,7 @@
 #  card_number :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  user_id     :integer
+#  seller_id   :integer
 #
 
 class SellerProfile < ApplicationRecord
