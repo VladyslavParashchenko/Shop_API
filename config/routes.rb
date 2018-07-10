@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-
-  resources :product
+  resources :product do
+    resources :charges, only: [:create]
+  end
   get "category/index"
   get "profile_controller/create"
   get "profile_controller/update"

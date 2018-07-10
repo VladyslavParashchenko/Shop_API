@@ -10,7 +10,8 @@ RSpec.describe ProductController, type: :controller do
     let(:product) { attributes_for(:product, :with_image).merge(category_id: category.id) }
     subject { post :create, params: product }
     it "returns http success" do
-      expect(response.status).to eq(200)
+      subject
+      expect(response).to have_http_status(200)
     end
     it "returns http success" do
       expect { subject }.to change(Product, :count).by 1
@@ -26,7 +27,7 @@ RSpec.describe ProductController, type: :controller do
     subject { get :index, params: { page: 1, per: 10 } }
     it "returns http success" do
       subject
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(200)
     end
     it "should return only 10 products" do
       subject
@@ -46,7 +47,7 @@ RSpec.describe ProductController, type: :controller do
     end
   end
 
-  describe "GET #destroy" do
+  describe "DELETE #destroy" do
 
     let(:product) { create(:product, seller: user) }
     subject { delete :destroy, params: { id: product.id } }
@@ -65,7 +66,7 @@ RSpec.describe ProductController, type: :controller do
     let(:product) { create(:product, seller: user) }
     subject { get :show, params: { id: product.id } }
     it "returns http success" do
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(200)
     end
     it "returns http success" do
       subject
