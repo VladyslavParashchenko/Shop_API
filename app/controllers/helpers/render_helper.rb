@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 module Json_Helper
-  def render_collection(resources)
+  def render_collection_pagination(resources)
     render json: resources.page(params[:page]).per(params[:per])
+  end
+  def render_collection_all_elements(resources)
+    render json: resources
   end
 
   def render_item(item)

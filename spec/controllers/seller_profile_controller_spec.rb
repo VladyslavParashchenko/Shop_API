@@ -2,14 +2,12 @@
 
 require "rails_helper"
 
-RSpec.describe CustomerProfileController, type: :controller do
+RSpec.describe SellerProfileController, type: :controller do
   before(:each) { login(user) }
-
-
   describe "GET #create" do
-    let(:user) { create(:customer) }
-    let(:customer_profile) { attributes_for(:customer_profile).merge! user_id: user.id }
-    subject { post :create, params: customer_profile }
+    let(:user) { create(:seller) }
+    let(:seller_profile) { attributes_for(:seller_profile).merge! user_id: user.id }
+    subject { post :create, params: seller_profile }
     it "returns http success" do
         subject
         expect(response.status).to eq(200)
@@ -17,13 +15,13 @@ RSpec.describe CustomerProfileController, type: :controller do
     it "should customer_profile_customer_id equal to user.id" do
       subject
       data = json_parse
-      expect(data["customer_id"]).to eq(user.id)
+      expect(data["seller_id"]).to eq(user.id)
     end
   end
 
   describe "GET #update" do
-    let(:user) { create(:customer, :with_profile) }
-    subject { put :update, params: { id: user.customer_profile.id, card_number: Faker::Finance.credit_card(:mastercard) } }
+    let(:user) { create(:seller, :with_profile) }
+    subject { put :update, params: { id: user.seller_profile.id, card_number: Faker::Finance.credit_card(:mastercard) } }
     it "returns success http status" do
         subject
         expect(response.status).to eq(200)
