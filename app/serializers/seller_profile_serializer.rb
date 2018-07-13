@@ -20,7 +20,4 @@
 
 class SellerProfileSerializer < ActiveModel::Serializer
   attributes :id, :plan
-  def plan
-    object.plan
-  end
 end
