@@ -13,7 +13,7 @@ RSpec.describe ProductController, type: :controller do
       subject
       expect(response).to have_http_status(200)
     end
-    it "returns http success" do
+    it "should change Product.count by -1``" do
       expect { subject }.to change(Product, :count).by 1
     end
     it "should return product with image" do
@@ -55,7 +55,7 @@ RSpec.describe ProductController, type: :controller do
       subject
       expect(response.status).to eq(200)
     end
-    it "returns http success" do
+    it "should change Product.count by -1" do
       product
       expect { subject }.to change(Product, :count).by -1
     end
@@ -68,7 +68,7 @@ RSpec.describe ProductController, type: :controller do
     it "returns http success" do
       expect(response).to have_http_status(200)
     end
-    it "returns http success" do
+    it "id of return object should equal product.id" do
       subject
       data = json_parse
       expect(data["id"]).to eq(product.id)

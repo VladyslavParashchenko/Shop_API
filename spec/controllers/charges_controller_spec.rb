@@ -4,10 +4,10 @@ require "rails_helper"
 
 RSpec.describe ChargesController, type: :controller do
   before(:each) { login(user) }
-  describe "POST #create" do
-    let(:product) { create(:product, seller: create(:seller, :with_profile)) }
+  subject { post :create, params: { product_id: product.id, stripeToken: stripe_token } }
+  describe "POST #create charge with a user who does not have a subscription" do
+    let(:product) { create(:product, seller: create(:seller, :with_profile), price: 100) }
     let(:user) { create(:customer) }
-    subject { post :create, params: { product_id: product.id, stripeToken: stripe_token } }
     it "returns http success" do
       subject
       expect(response).to have_http_status(200)
@@ -16,19 +16,47 @@ RSpec.describe ChargesController, type: :controller do
       subject
       expect(json_parse["amount"]).to eq(amount_to_cent(product.price))
     end
+    it "should amount operation to equal product price" do
+      subject
+      expect(json_parse["destination_amount"]).to eq(7000)
+    end
     it "returns successful transaction status" do
       subject
       expect(json_parse["status"]).to eq("succeeded")
     end
   end
+  describe "POST #create charge with a user who has a subscription" do
+    let(:seller) do
+      user = create(:seller, :with_profile)
+      user.seller_profile.update(plan: create(:plan), subscription_at: 2.days.ago, subscription_expires_at: 10.days.from_now)
+      user
+    end
+    let(:user) { create(:customer) }
+    let(:product) { create(:product, seller: seller, price: 100) }
+    it "returns http success" do
+      subject
+      expect(response).to have_http_status(200)
+    end
+    it "should amount operation to equal product price" do
+      subject
+      expect(json_parse["amount"]).to eq(amount_to_cent(product.price))
+    end
+    it "should amount operation to equal product price" do
+      subject
+      expect(json_parse["destination_amount"]).to eq(amount_after_tax(product.price, seller.seller_profile.plan.percent))
+    end
+    it "returns successful transaction status" do
+      subject
+      expect(json_parse["status"]).to eq("succeeded")
+    end
 
+  end
 end
 
 def amount_to_cent(amount)
   (amount * 100).to_i
 end
-
-def stripe_token
-  stripe_helper = StripeMock.create_test_helper
-  stripe_helper.generate_card_token(last4: "1234")
+def amount_after_tax(amount, tax)
+  amount = amount_to_cent(amount)
+  (amount - amount / 100 * tax).to_i
 end

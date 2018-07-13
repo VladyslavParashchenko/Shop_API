@@ -15,7 +15,7 @@ class ChargesController < ApplicationController
       description: "Purchase #{product.name}",
       currency: "usd",
       destination: {
-          amount: seller_amount(amount),
+          amount: seller_amount(amount, product.seller.seller_profile),
           account: seller
       }
     )
@@ -27,8 +27,8 @@ class ChargesController < ApplicationController
 
   protected
 
-    def seller_amount(full_amount)
-      system_percent = ENV["SYSTEM_TAX_PERCENT"].to_i
+    def seller_amount(full_amount, seller_profile)
+      system_percent = seller_profile.get_seller_tax
       (full_amount / 100 * (100 - system_percent)).to_i
     end
 end

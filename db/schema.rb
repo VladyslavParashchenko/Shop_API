@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_09_113527) do
+ActiveRecord::Schema.define(version: 2018_07_11_141921) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -26,6 +26,15 @@ ActiveRecord::Schema.define(version: 2018_07_09_113527) do
     t.datetime "updated_at", null: false
     t.integer "customer_id"
     t.index ["customer_id"], name: "index_customer_profiles_on_customer_id"
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.string "stripe_id", null: false
+    t.string "name", null: false
+    t.decimal "display_price", null: false
+    t.integer "percent", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "products", force: :cascade do |t|
@@ -51,6 +60,11 @@ ActiveRecord::Schema.define(version: 2018_07_09_113527) do
     t.integer "seller_id"
     t.string "stripe_token"
     t.string "card_token"
+    t.integer "plan_id"
+    t.datetime "subscription_at"
+    t.datetime "subscription_expires_at"
+    t.string "stripe_customer_id"
+    t.index ["plan_id"], name: "index_seller_profiles_on_plan_id"
     t.index ["seller_id"], name: "index_seller_profiles_on_seller_id"
   end
 
