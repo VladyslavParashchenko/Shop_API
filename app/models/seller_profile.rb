@@ -5,12 +5,10 @@
 # Table name: seller_profiles
 #
 #  id                      :integer          not null, primary key
-#  card_number             :string
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  seller_id               :integer
 #  stripe_token            :string
-#  card_token              :string
 #  plan_id                 :integer
 #  subscription_at         :datetime
 #  subscription_expires_at :datetime
@@ -20,7 +18,7 @@
 class SellerProfile < ApplicationRecord
   belongs_to :seller
   belongs_to :plan, optional: true
-
+  validates :seller_id, uniqueness: true
   def subscribe_for_plan(plan, card_token)
     customer = Stripe::Customer.create(
       source: card_token,

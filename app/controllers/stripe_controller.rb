@@ -11,7 +11,6 @@ class StripeController < ApplicationController
       subscriber_profile .subscription_expires_at = Time.at(event.data.object.current_period_end).to_datetime
       subscriber_profile .save
     end
-
     render nothing: true
   end
 end
