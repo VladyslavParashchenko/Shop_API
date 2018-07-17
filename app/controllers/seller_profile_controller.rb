@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SellerProfileController < ProfileController
+  expose :profile, model: SellerProfile
   def stripe
     credentials = JSON.parse(get_credentials_by_authorization_code)
     if (credentials.key?("error")) then
@@ -16,10 +17,6 @@ class SellerProfileController < ProfileController
 
     def profile_params
       { seller_id: current_user.id }
-    end
-
-    def current_model
-      SellerProfile
     end
 
     def get_credentials_by_authorization_code

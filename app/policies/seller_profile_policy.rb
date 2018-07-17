@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class SellerProfilePolicy < ProfilePolicy
+class SellerProfilePolicy < ApplicationPolicy
   def update?
-    @profile.seller_id == @user.id
+    @record.seller_id == @user.id
   end
 end

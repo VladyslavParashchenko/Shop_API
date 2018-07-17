@@ -49,7 +49,7 @@ RSpec.describe "Passwords", type: :request do
 
     it "should respond with success" do
       subject
-      json_response = json_parse
+      json_response = json_parse_response
       expect(json_response["message"]).to eq("Your password has been successfully updated.")
     end
   end

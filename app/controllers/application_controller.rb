@@ -10,6 +10,7 @@ class ApplicationController < ActionController::API
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   rescue_from ActiveRecord::RecordNotFound, with: :permission_denied_answer
+  rescue_from ActiveRecord::RecordInvalid, with: :validation_failed
   rescue_from Pundit::NotAuthorizedError, with: :permission_denied_answer
   rescue_from Stripe::StripeError, with: :stripe_error_handler
 
@@ -19,6 +20,9 @@ class ApplicationController < ActionController::API
     end
     def permission_denied_answer
       render_error({ error: "You do not have rights to this action" }, 400)
+      end
+    def validation_failed(e)
+      render_error({ error: e }, 400)
     end
     def stripe_error_handler(e)
       render_error(e, 403)

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ChargesController < ApplicationController
+  expose :product, scope: -> { Product.for_sale }, id: -> { params[:product_id] }
   def create
-    product = Product.for_sale.find(params[:product_id])
     amount = (product.price * 100).to_i
     customer = Stripe::Customer.create(
       email: current_user.email,
@@ -19,7 +19,7 @@ class ChargesController < ApplicationController
           account: seller
       }
     )
-    product.update(customer_id: current_user.id, status: :sales)
+    product.update(customer_id: current_user.id, status: :sold)
     render_charge(charge)
   rescue Stripe::StripeError => e
     render_error(e.message, 403)
