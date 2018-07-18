@@ -35,7 +35,7 @@ class SellerProfile < ApplicationRecord
     if has_active_subscription?
       plan.percent
     else
-      ENV["SYSTEM_TAX_PERCENT"].nil? ? 30 : ENV["SYSTEM_TAX_PERCENT"].to_i
+      ENV.fetch("SYSTEM_TAX_PERCENT", 30)
     end
   end
 end
