@@ -22,25 +22,30 @@ RSpec.describe ProductController, type: :controller do
     end
   end
   describe "GET #index" do
-    let!(:products) { create_list(:product, 12) }
     subject { get :index, params: { page: 1, per: 10 } }
-    it "returns http success" do
-      subject
-      expect(response).to have_http_status(200)
+    context "products with status for sale" do
+      let!(:products) { create_list(:product, 12) }
+      it "returns http success" do
+        subject
+        expect(response).to have_http_status(200)
+      end
+      it "should return only 10 products" do
+        subject
+        data = json_parse_response
+        expect(data.length).to eq(10)
+      end
+      it "each object has right fields" do
+        subject
+        expect(json_parse_response).to all include("id", "name", "status", "price", "category", "seller", "image")
+      end
     end
-    it "should return only 10 products" do
-      subject
-      data = json_parse_response
-      expect(data.length).to eq(10)
-    end
-    it "should return only 10 products" do
-      subject
-      data = json_parse_response
-      expect(data.length).to all
-    end
-    it "each object has right fields" do
-      subject
-      expect(json_parse_response).to all include("id", "name", "status", "price", "category", "seller", "image")
+    context "products with different status" do
+      let!(:products) { create_list(:product, 5, status: :for_sale) }
+      let!(:sold_products) { create_list(:product, 5, status: :sold) }
+      it "should return only 10 products" do
+        subject
+        expect(json_parse_response).to all include("status" => "for_sale")
+      end
     end
   end
 
