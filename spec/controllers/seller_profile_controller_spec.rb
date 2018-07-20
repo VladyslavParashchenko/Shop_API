@@ -4,34 +4,32 @@ require "rails_helper"
 
 RSpec.describe SellerProfileController, type: :controller do
   before(:each) { login(user) }
-  describe "GET #create" do
+  describe "POST #create" do
     let(:user) { create(:seller) }
     let(:seller_profile) { attributes_for(:seller_profile).merge! user_id: user.id }
     subject { post :create, params: seller_profile }
     it "returns http success" do
-        subject
-        expect(response.status).to eq(200)
-      end
+      subject
+      expect(response).to have_http_status(200)
+    end
     it "should customer_profile_customer_id equal to user.id" do
       subject
       data = json_parse
-      expect(data["seller_id"]).to eq(user.id)
+      expect(data["id"]).to eq(user.id)
     end
   end
 
-  describe "GET #update" do
+  describe "POST #stripe" do
     let(:user) { create(:seller, :with_profile) }
-    subject { put :update, params: { id: user.seller_profile.id, card_number: Faker::Finance.credit_card(:mastercard) } }
+    subject { post :stripe, params: { code: "dffsdldgsknsdnbglsnkgblgb" } }
     it "returns success http status" do
-        subject
-        expect(response.status).to eq(200)
-      end
-    it "should data was changed" do
       subject
-      data = json_parse
-      expect(request.params[:card_number]).to eq(data["card_number"])
+      expect(response).to have_http_status(200)
+    end
+    it "stripe token must exist" do
+      subject
+      user.reload
+      expect(user.seller_profile.stripe_token).not_to be_empty
     end
   end
-
-
 end

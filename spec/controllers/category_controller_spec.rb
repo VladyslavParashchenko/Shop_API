@@ -9,7 +9,7 @@ RSpec.describe CategoryController, type: :controller do
     let(:categories) { create_list(:category, 10) }
     it "returns http success status" do
       subject
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(200)
     end
     it "should categories  count equal count of categories that we get" do
       categories

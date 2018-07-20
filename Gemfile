@@ -57,7 +57,8 @@ group :development, :test do
   gem "rubocop", "~> 0.56.0", require: false
   gem "bullet"
   gem "carrierwave", "~> 1.0"
-  gem "dotenv-rails"
+  gem "stripe-ruby-mock", "~> 2.5.0", require: "stripe_mock"
+  gem "travis"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -66,3 +67,5 @@ gem "active_model_serializers", "~> 0.10.0"
 gem "pundit"
 gem "kaminari"
 gem "carrierwave", "~> 1.0"
+gem "stripe"
+gem "dotenv-rails", groups: [:development, :test]

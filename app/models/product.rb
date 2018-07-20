@@ -15,13 +15,13 @@
 #  category_id :integer
 #  seller_id   :integer
 #  customer_id :integer
-#
-# require 'carrierwave/orm/activerecord'
+
 class Product < ApplicationRecord
   validates :price, numericality: { greater_than: 0 }
   validates :name, presence: true
   enum status: { for_sale: 0, sales: 1 }
   belongs_to :seller
   belongs_to :category
+  belongs_to :customer, optional: true
   mount_uploader :image, ImageUploader
 end

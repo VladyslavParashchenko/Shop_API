@@ -19,4 +19,7 @@ module Json_Helper
   def render_error(errors, status)
     render json: { errors: errors }, status: status
   end
+  def render_charge(charge)
+    render json: { status: charge.status, amount: charge.amount, description: charge.description, destination_amount: charge.destination.amount }
+  end
 end
