@@ -15,13 +15,11 @@
 #  category_id :integer
 #  seller_id   :integer
 #  customer_id :integer
+#
 
-class Product < ApplicationRecord
-  validates :price, numericality: { greater_than: 0 }
-  validates :name, presence: true
-  enum status: { for_sale: 0, sold: 1 }
-  belongs_to :seller
-  belongs_to :category
-  belongs_to :customer, optional: true
-  mount_uploader :image, ImageUploader
+class ProductSerializer < ActiveModel::Serializer
+  attributes :id, :name, :description, :image, :status, :price
+  has_one :category
+  has_one :seller
+  has_one :customer
 end

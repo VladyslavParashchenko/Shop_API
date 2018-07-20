@@ -14,7 +14,7 @@ RSpec.describe CategoryController, type: :controller do
     it "should categories  count equal count of categories that we get" do
       categories
       subject
-      data = json_parse
+      data = json_parse_response
       expect(data.length).to eq(Category.count)
     end
   end

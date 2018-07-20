@@ -37,12 +37,7 @@ group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
 end
 
-group :development do
-  gem "listen", ">= 3.0.5", "< 3.2"
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem "spring"
-  gem "spring-watcher-listen", "~> 2.0.0"
-end
+
 group :development do
   gem "listen", ">= 3.0.5", "< 3.2"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
@@ -56,7 +51,6 @@ group :development, :test do
   gem "rspec-rails", "~> 3.7"
   gem "rubocop", "~> 0.56.0", require: false
   gem "bullet"
-  gem "carrierwave", "~> 1.0"
   gem "stripe-ruby-mock", "~> 2.5.0", require: "stripe_mock"
   gem "travis"
 end
@@ -69,3 +63,4 @@ gem "kaminari"
 gem "carrierwave", "~> 1.0"
 gem "stripe"
 gem "dotenv-rails", groups: [:development, :test]
+gem "decent_exposure", github: "hashrocket/decent_exposure", branch: "master"

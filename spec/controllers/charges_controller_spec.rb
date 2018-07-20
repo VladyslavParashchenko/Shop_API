@@ -14,15 +14,15 @@ RSpec.describe ChargesController, type: :controller do
     end
     it "should amount operation to equal product price" do
       subject
-      expect(json_parse["amount"]).to eq(amount_to_cent(product.price))
+      expect(json_parse_response["amount"]).to eq(amount_to_cent(product.price))
     end
-    it "should amount operation to equal product price" do
+    it "should amount operation to equal product price - shop tax" do
       subject
-      expect(json_parse["destination_amount"]).to eq(7000)
+      expect(json_parse_response["destination_amount"]).to eq(7000)
     end
     it "returns successful transaction status" do
       subject
-      expect(json_parse["status"]).to eq("succeeded")
+      expect(json_parse_response["status"]).to eq("succeeded")
     end
   end
   describe "POST #create charge with a user who has a subscription" do
@@ -39,23 +39,27 @@ RSpec.describe ChargesController, type: :controller do
     end
     it "should amount operation to equal product price" do
       subject
-      expect(json_parse["amount"]).to eq(amount_to_cent(product.price))
+      expect(json_parse_response["amount"]).to eq(amount_to_cent(product.price))
     end
     it "should amount operation to equal product price" do
       subject
-      expect(json_parse["destination_amount"]).to eq(amount_after_tax(product.price, seller.seller_profile.plan.percent))
+      expect(json_parse_response["destination_amount"]).to eq(amount_after_tax(product.price, seller.seller_profile.plan.percent))
     end
     it "returns successful transaction status" do
       subject
-      expect(json_parse["status"]).to eq("succeeded")
+      expect(json_parse_response["status"]).to eq("succeeded")
     end
-
+    it "return right list of fields" do
+      subject
+      expect(json_parse_response).to include("status", "amount", "description", "destination_amount")
+    end
   end
 end
 
 def amount_to_cent(amount)
   (amount * 100).to_i
 end
+
 def amount_after_tax(amount, tax)
   amount = amount_to_cent(amount)
   (amount - amount / 100 * tax).to_i

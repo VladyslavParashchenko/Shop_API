@@ -14,7 +14,7 @@ RSpec.describe "Stripe subscription tests", type: :request do
     describe "subscribe for plan" do
       it "plan should be added to the seller_profile" do
         subscribe_for_plan
-        data = json_parse
+        data = json_parse_response
         expect(data["seller_profile"]["plan"]["stripe_id"]).to be
       end
     end

@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/hashrocket/decent_exposure.git
+  revision: f7ad3b5ebac6b6dbc8ddef9998c0407c5f7c82c1
+  branch: master
+  specs:
+    decent_exposure (3.0.2)
+      activesupport (>= 4.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -281,6 +289,7 @@ DEPENDENCIES
   bullet
   byebug
   carrierwave (~> 1.0)
+  decent_exposure!
   devise_token_auth
   dotenv-rails
   factory_bot
