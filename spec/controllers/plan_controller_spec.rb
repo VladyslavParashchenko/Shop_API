@@ -10,7 +10,7 @@ RSpec.describe PlanController, type: :controller do
     subject { get :index }
     it "returns http success" do
       subject
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
     it "should Plan.count in db to equal count of return object" do
       subject
