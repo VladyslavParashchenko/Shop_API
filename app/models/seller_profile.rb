@@ -27,7 +27,14 @@ class SellerProfile < ApplicationRecord
     )
     update(plan: plan, stripe_customer_id: customer.id)
   end
-
+  def set_time_frame_for_plan(event)
+    if event.type =~ /^customer.subscription.create/
+      update(subscription_at: Time.at(event.data.object.start).to_datetime, subscription_expires_at: Time.at(event.data.object.current_period_end).to_datetime)
+    end
+  end
+  def set_stripe_token(token)
+    update(stripe_token: token)
+  end
   def has_active_subscription?
     subscription_expires_at.nil? ? false : Time.now < subscription_expires_at
   end

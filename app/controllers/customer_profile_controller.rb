@@ -6,6 +6,6 @@ class CustomerProfileController < ProfileController
   protected
 
     def profile_params
-      { customer_id: current_user.id }
+      params.permit(:stripe_customer_token).merge(customer_id: current_user.id)
     end
 end

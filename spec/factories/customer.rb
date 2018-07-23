@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :customer, class: Customer, parent: :user do
     trait :with_profile do
       after(:create) do |customer|
-        create(:customer_profile, customer: customer)
+        customer.customer_profile.update(stripe_customer_token: stripe_token)
       end
     end
   end

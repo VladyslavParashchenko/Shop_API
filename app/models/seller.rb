@@ -35,4 +35,10 @@
 class Seller < User
   has_many :products
   has_one :seller_profile
+  after_create :create_profile
+  protected
+
+    def create_profile
+      SellerProfile.create(seller_id: id)
+    end
 end

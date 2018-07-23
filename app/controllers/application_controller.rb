@@ -16,7 +16,7 @@ class ApplicationController < ActionController::API
 
   protected
     def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :phone, :birthday, :password, :password_confirmation, :allow_password_change, :confirmed_at])
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :phone, :birthday, :password, :password_confirmation, :allow_password_change, :confirmed_at, :type])
     end
     def permission_denied_answer
       render_error({ error: "You do not have rights to this action" }, 400)
