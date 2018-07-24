@@ -7,7 +7,6 @@ RSpec.describe CustomerProfileController, type: :controller do
   describe "PUT #update" do
     subject { put :update, params: { id: user.id, stripe_customer_token: stripe_token } }
     let(:user) { create(:customer, :with_profile) }
-    # let(:customer_profile) {attributes_for(:customer_profile, user_id: user.id)}
     include_examples "check is return status success"
     it "stripe customer token should be change" do
       subject

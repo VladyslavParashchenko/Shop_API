@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe ChargesController, type: :controller do
   before(:each) { login(user) }
   subject { post :create, params: { product_id: product.id, stripeToken: stripe_token } }
-  describe "POST #create charge with a user who does not have a subscription" do
+  describe "POST #create charge" do
     let(:product) { create(:product, seller: create(:seller), price: 100) }
     let(:user) { create(:customer, :with_profile) }
     include_examples "check is return status success"

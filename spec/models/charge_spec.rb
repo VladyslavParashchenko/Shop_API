@@ -27,7 +27,7 @@ RSpec.describe Charge, type: :model do
     charge.pay
     charge.reload
   end
-  describe "make charge " do
+  describe "Make charge" do
     it "should operation status to equal succeeded" do
       subject
       expect(charge.status).to eq("succeeded")

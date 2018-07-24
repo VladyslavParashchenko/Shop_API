@@ -22,9 +22,9 @@ class ApplicationController < ActionController::API
       render_error({ error: "You do not have rights to this action" }, 400)
       end
     def validation_failed(e)
-      render_error({ error: e }, 400)
+      render_error({ error: e }, 403)
     end
     def stripe_error_handler(e)
-      render_error(e, 403)
+      render_error(e, 400)
     end
 end
