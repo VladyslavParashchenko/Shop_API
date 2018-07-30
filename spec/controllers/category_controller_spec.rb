@@ -7,10 +7,7 @@ RSpec.describe CategoryController, type: :controller do
   describe "GET #index" do
     subject { get :index }
     let(:categories) { create_list(:category, 10) }
-    it "returns http success status" do
-      subject
-      expect(response).to have_http_status(200)
-    end
+    include_examples "check is return status success"
     it "should categories  count equal count of categories that we get" do
       categories
       subject

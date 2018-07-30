@@ -17,5 +17,4 @@
 
 class SellerProfileSerializer < ActiveModel::Serializer
   attributes :id, :plan
-  has_one :seller
 end

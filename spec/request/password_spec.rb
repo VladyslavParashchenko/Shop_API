@@ -8,10 +8,7 @@ RSpec.describe "Passwords", type: :request do
   describe "POST create" do
     subject { post "/auth/password", params: { email: user.email, redirect_url: "/" }, headers: user.create_new_auth_token }
 
-    it "should respond with success" do
-      subject
-      expect(response.successful?).to be_truthy
-    end
+    include_examples "check is return status success"
   end
 
   describe "GET edit" do

@@ -4,20 +4,22 @@ class SellerProfileController < ProfileController
   expose :profile, model: SellerProfile
 
   def stripe
-    credientils_servise = StripeCredentialsServise.new(params)
-    credentials = JSON.parse(credientils_servise.get_credentials_by_authorization_code)
-    if (credentials.key?("error")) then
-      render_error(credentials["error_description"], 403)
-    else
-      account_id = credentials["stripe_user_id"]
-      current_user.seller_profile.update(stripe_token: account_id)
-      render_item(current_user)
-    end
+    credentials = JSON.parse(StripeCredentialsServise.new(params).get_credentials_by_authorization_code)
+    handle_credentials(credentials)
   end
 
   protected
 
     def profile_params
       { seller_id: current_user.id }
+    end
+
+    def handle_credentials(credentials)
+      if (credentials.key?("error"))
+        render_error(credentials["error_description"], 400)
+      else
+        current_user.seller_profile.set_stripe_token(credentials["stripe_user_id"])
+        render_item(current_user)
+      end
     end
 end

@@ -7,10 +7,7 @@ RSpec.describe "Sessions test", type: :request do
   describe "sign in" do
     subject { post "/auth/sign_in", params: { email: user.email, password: user.password } }
     context "try login with valid data" do
-      it "should return success status" do
-        subject
-        expect(response.status).to eq(200)
-      end
+      include_examples "check is return status success"
       it "should controller.user_id equal user_id" do
         subject
         expect(controller.current_user.id).to eq(user.id)
@@ -23,10 +20,7 @@ RSpec.describe "Sessions test", type: :request do
   end
   describe "sign out" do
     subject { delete "/auth/sign_out", headers: user.create_new_auth_token }
-    it "should return success status" do
-      subject
-      expect(response.status).to eq(200)
-    end
+    include_examples "check is return status success"
     it "should not return access-token" do
       subject
       expect(response.has_header?("access-token")).to eq false

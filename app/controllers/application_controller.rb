@@ -16,15 +16,15 @@ class ApplicationController < ActionController::API
 
   protected
     def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :phone, :birthday, :password, :password_confirmation, :allow_password_change, :confirmed_at])
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :phone, :birthday, :password, :password_confirmation, :allow_password_change, :confirmed_at, :type])
     end
     def permission_denied_answer
       render_error({ error: "You do not have rights to this action" }, 400)
       end
     def validation_failed(e)
-      render_error({ error: e }, 400)
+      render_error({ error: e }, 403)
     end
     def stripe_error_handler(e)
-      render_error(e, 403)
+      render_error(e, 400)
     end
 end

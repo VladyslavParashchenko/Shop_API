@@ -9,10 +9,7 @@ RSpec.describe ProductController, type: :controller do
     let(:category) { create(:category) }
     let(:product) { attributes_for(:product, :with_image, category_id: category.id) }
     subject { post :create, params: product }
-    it "returns http success" do
-      subject
-      expect(response).to have_http_status(200)
-    end
+    include_examples "check is return status success"
     it "should change Product.count by -1" do
       expect { subject }.to change(Product, :count).by 1
     end
@@ -72,7 +69,7 @@ RSpec.describe ProductController, type: :controller do
   describe "DELETE #destroy" do
     let(:product) { create(:product, seller: user) }
     subject { delete :destroy, params: { id: product.id } }
-    context "product owner update product" do
+    context "product owner destroy product" do
       it "returns http success" do
         subject
         expect(response.status).to eq(200)
@@ -82,7 +79,7 @@ RSpec.describe ProductController, type: :controller do
         expect { subject }.to change(Product, :count).by -1
       end
     end
-    context "another user update product" do
+    context "another user destroy product" do
       before(:each) { login(create(:seller)) }
       it "return permission error" do
         subject

@@ -35,4 +35,12 @@
 class Customer < User
   has_one :customer_profile
   has_many :products
+
+  after_create :create_profile
+
+  protected
+
+    def create_profile
+      CustomerProfile.create(customer_id: id)
+    end
 end

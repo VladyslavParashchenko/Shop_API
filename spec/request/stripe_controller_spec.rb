@@ -8,7 +8,7 @@ RSpec.describe "Stripe subscription tests", type: :request do
     @plan_in_db = Plan.create(name: @plan.name, stripe_id: @plan.id, display_price: (@plan.amount.to_f / 100), percent: 20)
   end
 
-  let(:user) { create(:seller, :with_profile) }
+  let(:user) { create(:seller) }
   subject(:subscribe_for_plan) { post "/stripe/subscribe_for_plan/#{@plan_in_db.id}", params: { stripe_token: stripe_token }, headers: user.create_new_auth_token }
   describe "Test subscription controller" do
     describe "subscribe for plan" do
